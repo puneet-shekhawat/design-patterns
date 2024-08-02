@@ -1,0 +1,15 @@
+In Log4j, log levels like DEBUG, INFO, WARN, ERROR, etc., are defined in a hierarchy:
+ALL < DEBUG < INFO < WARN < ERROR < FATAL < OFF. For instance, if the log level is set to WARN, only
+WARN, ERROR, and FATAL messages will be logged, while DEBUG and INFO messages will be suppressed.
+
+The Chain of Responsibility pattern is ideal for this scenario. For example, if a log message is generated
+with the ERROR level, it is passed through a chain of handlers. Each handler checks its own log level and
+the system’s configured log level.
+
+Handlers Check Levels: The ERROR log first goes to the DEBUG handler (which is not enabled), then to the
+INFO handler (also not enabled), and finally to the WARN handler. Since WARN is enabled, it continues to
+the ERROR handler.
+Log Processing: The ERROR handler, which matches the log level and the system’s configuration, processes
+and logs the message.
+This pattern effectively manages log levels by allowing the request to traverse through various handlers,
+fulfilling the request only if it meets the criteria set by the chain’s order and the enabled log levels.
